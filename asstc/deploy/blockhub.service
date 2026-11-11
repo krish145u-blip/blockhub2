@@ -1,0 +1,15 @@
+[Unit]
+Description=BLOCKHUB FastAPI Gunicorn/Uvicorn Daemon
+After=network.target postgresql.service
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/blockhub
+EnvironmentFile=/opt/blockhub/.env
+ExecStart=/opt/blockhub/.venv/bin/uvicorn backend.main:app --host 127.0.0.1 --port 8000 --workers 4 --proxy-headers
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
